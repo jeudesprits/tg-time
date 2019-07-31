@@ -1,0 +1,41 @@
+{
+  "name": "tg-time",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "npm run serve",
+    "build": "npm run build-ts",
+    "serve": "node dist/index.js",
+    "build-ts": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeudesprits/tg-time.git"
+  },
+  "author": "jeudesprits",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeudesprits/tg-time/issues"
+  },
+  "homepage": "https://github.com/jeudesprits/tg-time#readme",
+  "dependencies": {
+    "airgram": "^1.2.0",
+    "dotenv-safe": "^6.1.0",
+    "node-cron": "^2.0.3",
+    "node-fetch": "^2.6.0",
+    "winston": "^3.2.1",
+    "winston-transport": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/dotenv-safe": "^5.0.3",
+    "@types/node": "^12.6.8",
+    "@types/node-cron": "^2.0.2",
+    "@types/node-fetch": "^2.5.0",
+    "@types/winston": "^2.4.4",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.5.3"
+  }
+}

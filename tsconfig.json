@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "es2019",
+    "module": "commonjs",
+    "lib": [
+      "es2019",
+      "dom",
+      "dom.iterable"
+    ],
+    "outDir": "./dist",
+    "removeComments": true,
+    "incremental": true,
+    /* Strict Type-Checking Options */
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "pretty": true,
+    /* Additional Checks */
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    /* Module Resolution Options */
+    "baseUrl": "./src",
+    "moduleResolution": "node",
+    "paths": {
+      "*": [
+        "./node_modules/*",
+        "./src/types/*"
+      ]
+    },
+    "esModuleInterop": true,
+    /* Experimental Options */
+    "experimentalDecorators": true
+  },
+  "include": [
+    "./src/**/*"
+  ],
+}

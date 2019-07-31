@@ -1,0 +1,13 @@
+{
+  "name": "tg-time",
+  "dockerFile": "Dockerfile",
+  "workspaceMount": "src=/Users/jeudesprits/Developer/tg-time,dst=/home/node/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/home/node/workspace",
+  "postCreateCommand": "zsh .devcontainer/docker-entrypoint.sh",
+  "extensions": [
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "visualstudioexptteam.vscodeintellicode",
+    "mutantdino.resourcemonitor",
+    "esbenp.prettier-vscode"
+  ]
+}

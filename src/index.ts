@@ -1,5 +1,5 @@
 import { Airgram, Auth, prompt } from 'airgram';
-import { User } from '@airgram/api';
+import { User, UserProfilePhotos } from '@airgram/api';
 import secrets from './utils/secrets';
 const { TG_APP_ID, TG_APP_HASH } = secrets;
 import cron from 'node-cron';
@@ -12,7 +12,6 @@ const airgram = new Airgram({
     logVerbosityLevel: 2,
 });
 
-// tslint:disable-next-line: no-unused-expression
 const auth = new Auth(airgram);
 
 auth.use({
@@ -20,25 +19,34 @@ auth.use({
     phoneNumber: () => prompt(`Please enter your phone number:\n`),
 });
 
-cron.schedule('* * * * *', async () => {
-    try {
-        const me = await airgram.api.getMe();
-        const profilePhoto = (me as User).profilePhoto;
-        if (profilePhoto) {
-            await airgram.api.deleteProfilePhoto({
-                profilePhotoId: profilePhoto.id
-            })
-        }
+// tslint:disable-next-line: no-floating-promises
+(async () => {
+    const me = await airgram.api.getMe();
+    const myId = (me as User).id;
 
-        const tashkentTimeString = new Date().toLocaleString("en-US", { timeZone: "Asia/Tashkent" });
-        const tashkentTime = new Date(tashkentTimeString);
-        await airgram.api.setProfilePhoto({
-            photo: {
-                _: 'inputFileLocal',
-                path: `./time_images/${tashkentTime.getHours()}-${tashkentTime.getMinutes()}.jpeg`,
+    cron.schedule('* * * * *', async () => {
+        try {
+            const tashkentTimeString = new Date().toLocaleString("en-US", { timeZone: "Asia/Tashkent" });
+            const tashkentTime = new Date(tashkentTimeString);
+            await airgram.api.setProfilePhoto({
+                photo: {
+                    _: 'inputFileLocal',
+                    path: `./time_images/${tashkentTime.getHours()}-${tashkentTime.getMinutes()}.jpeg`,
+                }
+            });
+
+            const userProfilePhotos = await airgram.api.getUserProfilePhotos({
+                userId: myId,
+                limit: 5,
+            });
+            const photos = (userProfilePhotos as UserProfilePhotos).photos;
+
+            if (photos.length !== 0) {
+                const deletePhotoId = photos[photos.length - 1].id;
+                await airgram.api.deleteProfilePhoto({ profilePhotoId: deletePhotoId });
             }
-        });
-    } catch (error) {
-        logger.error(error.stack, { label: 'tg-time @jeudesprits' });
-    }
-});
+        } catch (error) {
+            logger.error(error.stack, { label: 'tg-time @jeudesprits' });
+        }
+    });
+})();

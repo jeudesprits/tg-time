@@ -34,7 +34,9 @@ WORKDIR /opt/app
 # user who runs the app. 
 USER $USERNAME
 COPY package.json package-lock.json* ./
-RUN npm install --no-optional && npm cache clean --force
+RUN npm i --no-optional \
+    && npm cache clean --force \
+    && npm run build
 ENV PATH /opt/app/node_modules/.bin:$PATH
 
 # Copy in our source code last, as it changes the most

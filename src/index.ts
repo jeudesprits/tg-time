@@ -37,11 +37,11 @@ auth.use({
 
             const userProfilePhotos = await airgram.api.getUserProfilePhotos({
                 userId: myId,
-                limit: 5,
+                limit: 2,
             });
             const photos = (userProfilePhotos as UserProfilePhotos).photos;
 
-            if (photos.length >= 2) {
+            if (photos.length === 2) {
                 const deletePhotoId = photos[1].id;
                 await airgram.api.deleteProfilePhoto({ profilePhotoId: deletePhotoId });
             }

@@ -13,6 +13,8 @@ RUN apt-get update \
     #
     # Verify git, process tools
     && apt-get install -y git procps zsh \
+    # Install build toolchain
+    && apt-get install -y python make g++ libc++1 \
     #
     # [Optional] Sudo support for non-root user
     && apt-get install -y sudo \
@@ -23,7 +25,9 @@ RUN apt-get update \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
-    && npm i -g npm
+    #
+    # Update npm
+    && npm i npm@latest -g
 
 # Switch to non-root user
 USER $USERNAME

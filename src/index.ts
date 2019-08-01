@@ -9,7 +9,7 @@ const airgram = new Airgram({
     command: './lib/libtdjson',
     apiId: Number(TG_APP_ID),
     apiHash: TG_APP_HASH,
-    logVerbosityLevel: 0,
+    logVerbosityLevel: 2,
 });
 
 // tslint:disable-next-line: no-unused-expression

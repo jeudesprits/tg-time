@@ -1,5 +1,5 @@
 # 🏗 Setup
-1. First of all need compile TDLib (Telegram Database library). Go to this repo: 
+1. First of all need compile TDLib (Telegram Database library). Go to this [repo](https://github.com/jeudesprits/tg-time-tdlib-build-docker): 
 `https://github.com/jeudesprits/tg-time-tdlib-build-docker`
 1. Clone this repo: `git clone https://github.com/jeudesprits/tg-time`
 2. Go to folder: `cd tg-time`

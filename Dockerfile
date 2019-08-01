@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     #
     # Install build toolchain
-    && apt-get install -y python make clang \
+    && apt-get install -y python make g++ \
     #
     # Clean up
     && apt-get autoremove -y \

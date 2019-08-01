@@ -1,5 +1,5 @@
 # Latest Node.js based on Debian Buster slim version 
-FROM node:slim
+FROM node:buster-slim
 
 # Non-root user provided by node image
 ARG USERNAME=node

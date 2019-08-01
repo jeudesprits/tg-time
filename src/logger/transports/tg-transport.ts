@@ -1,81 +1,51 @@
-// import Transport from 'winston-transport';
-// import FormData from 'form-data';
-// import fetch from 'node-fetch';
-// import { createReadStream, existsSync } from 'fs';
+import Transport from 'winston-transport';
+import fetch from 'node-fetch';
 
-// interface TelegramTransportOptions extends Transport.TransportStreamOptions {
-//     token: string;
-//     chatId: string;
-//     pathToImage: string;
-// }
+interface TelegramTransportOptions extends Transport.TransportStreamOptions {
 
-// export class TelegramTransport extends Transport {
-//     private token: string;
+    token: string;
 
-//     private chatId: string;
+    chatId: string;
 
-//     private pathToImage: string;
+}
 
-//     constructor(options: TelegramTransportOptions) {
-//         super(options);
+export class TelegramTransport extends Transport {
 
-//         this.token = options.token;
-//         this.chatId = options.chatId;
-//         this.pathToImage = options.pathToImage;
-//     }
+    private token: string;
 
-//     private async sendText(message: string) {
-//         const response = await fetch(`https://api.telegram.org/bot${this.token}/sendMessage`, {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({
-//                 chat_id: this.chatId,
-//                 text: `\`\`\`${message}\`\`\``,
-//                 parse_mode: 'Markdown',
-//                 disable_notification: true,
-//             }),
-//         });
+    private chatId: string;
 
-//         if (response.status !== 200) {
-//             const text = await response.text();
-//             setImmediate(() => this.emit('error', `${response.status} ${text}`));
-//         }
-//     }
+    constructor(options: TelegramTransportOptions) {
+        super(options);
 
-//     private async sendImage() {
-//         const imageStream = createReadStream(this.pathToImage);
+        this.token = options.token;
+        this.chatId = options.chatId;
+    }
 
-//         const formData = new FormData();
-//         formData.append('chat_id', this.chatId);
-//         formData.append('photo', imageStream);
-//         formData.append('disable_notification', 'true');
-//         const formHeaders = formData.getHeaders();
+    private async sendText(message: string) {
+        const response = await fetch(`https://api.telegram.org/bot${this.token}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: this.chatId,
+                text: `\`\`\`${message}\`\`\``,
+                parse_mode: 'Markdown',
+                disable_notification: true,
+            }),
+        });
 
-//         const response = await fetch(`https://api.telegram.org/bot${this.token}/sendPhoto`, {
-//             method: 'POST',
-//             headers: formHeaders,
-//             body: formData,
-//         });
+        if (response.status !== 200) {
+            const text = await response.text();
+            setImmediate(() => this.emit('error', `${response.status} ${text}`));
+        }
+    }
 
-//         if (response.status !== 200) {
-//             const text = await response.text();
-//             setImmediate(() => this.emit('error', `${response.status} ${text}`));
-//         }
+    log(info: any, callback: () => void): any {
+        setImmediate(() => this.emit('logged', info));
 
-//         imageStream.close();
-//     }
+        this.sendText(info[Symbol.for('message')])
+            .then(() => callback())
+            .catch(error => console.error(error));
+    }
 
-//     log(info: any, callback: () => void): any {
-//         setImmediate(() => this.emit('logged', info));
-
-//         this.sendText(info[Symbol.for('message')])
-//             .then(() => {
-//                 if (existsSync(this.pathToImage)) {
-//                     return this.sendImage();
-//                 }
-//                 return;
-//             })
-//             .then(() => callback())
-//             .catch(error => console.error(error));
-//     }
-// }
+}

@@ -2,6 +2,7 @@ pids
 logs
 results
 tmp
+lib
 
 # API keys and secrets
 .env

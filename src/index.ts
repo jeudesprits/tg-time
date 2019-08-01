@@ -26,7 +26,7 @@ auth.use({
 
     cron.schedule('* * * * *', async () => {
         try {
-            const tashkentTimeString = new Date().toLocaleString("en-US", { timeZone: "Asia/Tashkent" });
+            const tashkentTimeString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Tashkent' });
             const tashkentTime = new Date(tashkentTimeString);
             await airgram.api.setProfilePhoto({
                 photo: {

@@ -41,8 +41,8 @@ auth.use({
             });
             const photos = (userProfilePhotos as UserProfilePhotos).photos;
 
-            if (photos.length !== 0) {
-                const deletePhotoId = photos[photos.length - 1].id;
+            if (photos.length >= 2) {
+                const deletePhotoId = photos[1].id;
                 await airgram.api.deleteProfilePhoto({ profilePhotoId: deletePhotoId });
             }
         } catch (error) {

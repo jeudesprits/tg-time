@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install -y --no-install-recommends apt-utils dialog 2>&1 \ 
     #
-    # Verify git, process tools
+    # Verify git, process tools and of course zsh
     && apt-get install -y git procps zsh \
     # Install build toolchain
     && apt-get install -y python make g++ libc++1 \

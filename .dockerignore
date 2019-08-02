@@ -7,6 +7,8 @@ node_modules
 .git
 .gitignore
 .gitattributes
+.prettierrc
+tslint.json
 Dockerfile
 .dockerignore
 README.md

@@ -18,8 +18,8 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     #
-    # Update npm and install Typescript
-    && npm i npm@latest typescript -g
+    # Update npm
+    && npm i npm@latest
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
@@ -34,7 +34,7 @@ WORKDIR /opt/app
 # user who runs the app. 
 USER $USERNAME
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production
+RUN npm i
 ENV PATH /opt/app/node_modules/.bin:$PATH
 
 # Copy in our source code last, as it changes the most

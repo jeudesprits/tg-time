@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/jeudesprits/tg-time#readme",
   "dependencies": {
-    "airgram": "^1.2.0",
+    "airgram": "^1.2.1",
     "dotenv-safe": "^6.1.0",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.0",
@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@types/dotenv-safe": "^5.0.3",
-    "@types/node": "^12.6.8",
+    "@types/node": "^12.6.9",
     "@types/node-cron": "^2.0.2",
     "@types/node-fetch": "^2.5.0",
     "@types/winston": "^2.4.4",

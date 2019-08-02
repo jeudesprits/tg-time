@@ -12,11 +12,12 @@ const airgram = new Airgram({
     logVerbosityLevel: 2,
 });
 
+// tslint:disable-next-line: no-unused-expression
 const auth = new Auth(airgram);
 
 auth.use({
-    code: () => prompt(`Please enter the secret code:\n`),
-    phoneNumber: () => prompt(`Please enter your phone number:\n`),
+    code: () => prompt('Please enter the secret code:\n'),
+    phoneNumber: () => prompt('Please enter your phone number:\n'),
 });
 
 // tslint:disable-next-line: no-floating-promises
@@ -28,10 +29,12 @@ auth.use({
         try {
             const tashkentTimeString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Tashkent' });
             const tashkentTime = new Date(tashkentTimeString);
+            const hours = `${tashkentTime.getHours()}`.padStart(2, '0');
+            const minutes = `${tashkentTime.getMinutes()}`.padStart(2, '0');
             await airgram.api.setProfilePhoto({
                 photo: {
                     _: 'inputFileLocal',
-                    path: `./time_images/${tashkentTime.getHours()}-${tashkentTime.getMinutes()}.jpeg`,
+                    path: `./time_images/${hours}-${minutes}.jpeg`,
                 }
             });
 
@@ -40,7 +43,6 @@ auth.use({
                 limit: 2,
             });
             const photos = (userProfilePhotos as UserProfilePhotos).photos;
-
             if (photos.length === 2) {
                 const deletePhotoId = photos[1].id;
                 await airgram.api.deleteProfilePhoto({ profilePhotoId: deletePhotoId });

@@ -1,9 +1,9 @@
-import { Airgram, Auth, prompt } from 'airgram';
-import { User, UserProfilePhotos } from '@airgram/api';
+import { Airgram, Auth } from 'airgram';
 import secrets from './utils/secrets';
 const { TG_APP_ID, TG_APP_HASH } = secrets;
 import cron from 'node-cron';
 import logger from './logger';
+import { User, UserProfilePhotos } from '@airgram/api';
 
 const airgram = new Airgram({
     command: './lib/libtdjson',
@@ -13,17 +13,19 @@ const airgram = new Airgram({
 });
 
 // tslint:disable-next-line: no-unused-expression
-const auth = new Auth(airgram);
+new Auth(airgram);
 
-auth.use({
-    code: () => prompt('Please enter the secret code:\n'),
-    phoneNumber: () => prompt('Please enter your phone number:\n'),
-});
+// auth.use({
+//     code: () => prompt('Please enter the secret code:\n'),
+//     phoneNumber: () => prompt('Please enter your phone number:\n'),
+// });
+
+let isFirst = true;
 
 // tslint:disable-next-line: no-floating-promises
 (async () => {
-    const me = await airgram.api.getMe();
-    const myId = (me as User).id;
+    let me = await airgram.api.getMe();
+    let myId = (me as User).id;
 
     cron.schedule('* * * * *', async () => {
         try {
@@ -38,17 +40,21 @@ auth.use({
                 }
             });
 
-            const userProfilePhotos = await airgram.api.getUserProfilePhotos({
-                userId: myId,
-                limit: 2,
-            });
-            if ((userProfilePhotos as UserProfilePhotos).totalCount === 2) {
-                const photos = (userProfilePhotos as UserProfilePhotos).photos;
-                const deletePhotoId = photos[1].id;
-                await airgram.api.deleteProfilePhoto({ profilePhotoId: deletePhotoId });
+            if (!isFirst) {
+                const response = await airgram.api.getUserProfilePhotos({
+                    userId: myId,
+                    limit: 2,
+                });
+                const profilePhotoId = (response as UserProfilePhotos).photos[1].id
+                await airgram.api.deleteProfilePhoto({ profilePhotoId });
             }
         } catch (error) {
             logger.error(error.stack, { label: 'tg-time @jeudesprits' });
+            return;
+        }
+
+        if (isFirst) {
+            isFirst = false;
         }
     });
 })();

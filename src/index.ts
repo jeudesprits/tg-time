@@ -1,4 +1,4 @@
-import { Airgram, Auth } from 'airgram';
+import { Airgram, Auth, prompt } from 'airgram';
 import secrets from './utils/secrets';
 const { TG_APP_ID, TG_APP_HASH } = secrets;
 import cron from 'node-cron';
@@ -12,13 +12,13 @@ const airgram = new Airgram({
     logVerbosityLevel: 2,
 });
 
-// tslint:disable-next-line: no-unused-expression
-new Auth(airgram);
 
-// auth.use({
-//     code: () => prompt('Please enter the secret code:\n'),
-//     phoneNumber: () => prompt('Please enter your phone number:\n'),
-// });
+const auth = new Auth(airgram);
+
+auth.use({
+    phoneNumber: () => prompt('Please enter your phone number:\n'),
+    code: () => prompt('Please enter the secret code:\n'),
+});
 
 let isFirst = true;
 

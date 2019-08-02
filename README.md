@@ -4,7 +4,10 @@
 2. Go to folder: `cd tg-time`
 3. Create `lib` folder: `mkdir lib` and copy your `libtdjson.{so/dylib}` file here
 4. Build docker container: `docker build --tag=jeudesprits/tg-time .`
-5. Run docker container: `docker run -it -e "NODE_ENV=production" --name "tg-time jeudesprits/tg-time:latest"`
+5. Run docker container: 
+```
+docker run -it -e "NODE_ENV=production" --name "tg-time" jeudesprits/tg-time:latest
+```
 6. Answer the questions(phone number and secret code)
 7. Press `Control+P Control+Q`
 8. PROFIT!

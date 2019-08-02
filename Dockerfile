@@ -18,8 +18,8 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     #
-    # Update npm
-    && npm i npm@latest -g
+    # Update npm and install Typescript
+    && npm i npm@latest typescript -g
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=

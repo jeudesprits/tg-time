@@ -13,6 +13,11 @@ RUN apt-get update \
     # Install build toolchain
     && apt-get install -y python make g++ libc++1 \
     #
+    # [Optional] Sudo support for non-root user
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
+    #
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \

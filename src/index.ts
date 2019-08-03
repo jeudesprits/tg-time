@@ -1,4 +1,5 @@
 import { Airgram, Auth, prompt } from 'airgram';
+import { msleep } from './utils/helpers';
 import secrets from './utils/secrets';
 const { TG_APP_ID, TG_APP_HASH } = secrets;
 import cron from 'node-cron';
@@ -41,6 +42,7 @@ let isFirst = true;
             });
 
             if (!isFirst) {
+                await msleep(1000);
                 const response = await airgram.api.getUserProfilePhotos({
                     userId: myId,
                     limit: 2,
